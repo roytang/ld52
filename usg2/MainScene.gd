@@ -4,7 +4,7 @@ var player_scene = preload("res://Player.tscn")
 var asteroid_scene = preload("res://Asteroid.tscn")
 var _player
 
-export var timer_base_time = 1.5
+export var timer_base_time = 1.0
 var spawn_count = 0
 
 var spawn_points = [
@@ -32,15 +32,20 @@ var inner_points = [
 var Spreader = {
 			"name": "Spreader",
 			"scene": "res://Enemies/Spreader.tscn",
-			"id": 2
+			"id": 1
 		}
 var Seeker = {
 			"name": "Seeker",
 			"scene": "res://Enemies/Seeker.tscn",
+			"id": 2
+		}
+var Hunter = {
+			"name": "Hunter",
+			"scene": "res://Enemies/Hunter.tscn",
 			"id": 3
 		}
 
-var spawn_list = [Seeker, Seeker, Spreader]
+var spawn_list = [Seeker, Seeker, Seeker, Spreader, Hunter]
 
 func _ready():
 	randomize()

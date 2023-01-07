@@ -28,4 +28,12 @@ shape = SubResource( 1 )
 position = Vector2( -16.6667, 1.66667 )
 shape = SubResource( 2 )
 
+[node name="BulletPoint" type="Node2D" parent="."]
+position = Vector2( 30, 0 )
+
+[node name="EnergyDrainTimer" type="Timer" parent="."]
+autostart = true
+
 [connection signal="hit" from="." to="." method="_on_Player_hit"]
+[connection signal="pickup" from="." to="." method="_on_Player_pickup"]
+[connection signal="timeout" from="EnergyDrainTimer" to="." method="_on_EnergyDrainTimer_timeout"]

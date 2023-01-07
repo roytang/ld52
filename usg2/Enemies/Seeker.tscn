@@ -12,6 +12,8 @@ height = 10.0
 [node name="Seeker" type="KinematicBody2D" groups=["enemy"]]
 collision_layer = 4
 script = ExtResource( 3 )
+speed = 120
+hpmax = 30
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 1.5708

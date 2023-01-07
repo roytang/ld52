@@ -16,7 +16,6 @@ func _on_Bullet_body_entered(body):
 		queue_free()
 	else:
 		if body.is_in_group("player"):
-			print("HIT HIT!")
 			body.emit_signal("hit", damage)
 			queue_free()
 

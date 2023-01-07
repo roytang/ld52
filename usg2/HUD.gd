@@ -12,3 +12,5 @@ func _ready():
 
 func _on_player_stats_changed(_player):
 	$ColorRect/HPOuter/HPInner.rect_size.x = 100 * _player.hpcurrent / _player.hpmax
+	$ColorRect/EnergyOuter/EnergyInner.rect_size.x = 100 * _player.energycurrent / _player.energymax
+	$ColorRect/MineralsOuter/MineralsInner.rect_size.x = 100 * _player.mineralscurrent / _player.mineralsmax
