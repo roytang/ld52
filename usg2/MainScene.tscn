@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://MainScene.gd" type="Script" id=1]
 [ext_resource path="res://MainTheme.tres" type="Theme" id=2]
 [ext_resource path="res://HUD.gd" type="Script" id=3]
 [ext_resource path="res://assets/starfield.jpg" type="Texture" id=4]
+[ext_resource path="res://assets/asteroid.png" type="Texture" id=5]
 
 [sub_resource type="Shader" id=1]
 code = "shader_type canvas_item;
@@ -117,6 +118,121 @@ margin_right = 101.0
 margin_bottom = 13.0
 color = Color( 0, 0.0627451, 1, 1 )
 
+[node name="UpgradeMenu" type="ColorRect" parent="HUD"]
+pause_mode = 2
+margin_left = 128.0
+margin_top = 75.0
+margin_right = 896.0
+margin_bottom = 525.0
+
+[node name="Inner" type="ColorRect" parent="HUD/UpgradeMenu"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 767.0
+margin_bottom = 449.0
+color = Color( 0.027451, 0.639216, 0.823529, 1 )
+
+[node name="Label" type="Label" parent="HUD/UpgradeMenu/Inner"]
+margin_left = 40.0
+margin_top = 22.0
+margin_right = 737.0
+margin_bottom = 55.0
+theme = ExtResource( 2 )
+text = "You collected enough minerals to upgrade your ship! Select an upgrade below."
+align = 1
+
+[node name="UpgradeButton1" type="Button" parent="HUD/UpgradeMenu/Inner"]
+margin_left = 87.0
+margin_top = 72.0
+margin_right = 379.0
+margin_bottom = 205.0
+theme = ExtResource( 2 )
+icon = ExtResource( 5 )
+
+[node name="Title" type="Label" parent="HUD/UpgradeMenu/Inner/UpgradeButton1"]
+margin_left = 83.0
+margin_top = 11.0
+margin_right = 281.0
+margin_bottom = 36.0
+text = "Upgrade 1 Title"
+
+[node name="Description" type="Label" parent="HUD/UpgradeMenu/Inner/UpgradeButton1"]
+margin_left = 83.0
+margin_top = 38.0
+margin_right = 286.0
+margin_bottom = 121.0
+text = "Upgrade 1 Description"
+autowrap = true
+
+[node name="UpgradeButton2" type="Button" parent="HUD/UpgradeMenu/Inner"]
+margin_left = 402.0
+margin_top = 72.0
+margin_right = 694.0
+margin_bottom = 205.0
+theme = ExtResource( 2 )
+icon = ExtResource( 5 )
+
+[node name="Title" type="Label" parent="HUD/UpgradeMenu/Inner/UpgradeButton2"]
+margin_left = 83.0
+margin_top = 11.0
+margin_right = 281.0
+margin_bottom = 36.0
+text = "Upgrade 1 Title"
+
+[node name="Description" type="Label" parent="HUD/UpgradeMenu/Inner/UpgradeButton2"]
+margin_left = 83.0
+margin_top = 38.0
+margin_right = 286.0
+margin_bottom = 121.0
+text = "Upgrade 1 Description"
+autowrap = true
+
+[node name="UpgradeButton3" type="Button" parent="HUD/UpgradeMenu/Inner"]
+margin_left = 87.0
+margin_top = 230.0
+margin_right = 379.0
+margin_bottom = 363.0
+theme = ExtResource( 2 )
+icon = ExtResource( 5 )
+
+[node name="Title" type="Label" parent="HUD/UpgradeMenu/Inner/UpgradeButton3"]
+margin_left = 83.0
+margin_top = 11.0
+margin_right = 281.0
+margin_bottom = 36.0
+text = "Upgrade 1 Title"
+
+[node name="Description" type="Label" parent="HUD/UpgradeMenu/Inner/UpgradeButton3"]
+margin_left = 83.0
+margin_top = 38.0
+margin_right = 286.0
+margin_bottom = 121.0
+text = "Upgrade 1 Description"
+autowrap = true
+
+[node name="UpgradeButton4" type="Button" parent="HUD/UpgradeMenu/Inner"]
+margin_left = 402.0
+margin_top = 230.0
+margin_right = 694.0
+margin_bottom = 363.0
+theme = ExtResource( 2 )
+icon = ExtResource( 5 )
+
+[node name="Title" type="Label" parent="HUD/UpgradeMenu/Inner/UpgradeButton4"]
+margin_left = 83.0
+margin_top = 11.0
+margin_right = 281.0
+margin_bottom = 36.0
+text = "Upgrade 1 Title"
+
+[node name="Description" type="Label" parent="HUD/UpgradeMenu/Inner/UpgradeButton4"]
+margin_left = 83.0
+margin_top = 38.0
+margin_right = 286.0
+margin_bottom = 121.0
+text = "Upgrade 1 Description"
+autowrap = true
+
 [node name="LeftWall" type="KinematicBody2D" parent="."]
 collision_layer = 16
 
@@ -146,3 +262,7 @@ position = Vector2( 516, 615 )
 shape = SubResource( 4 )
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
+[connection signal="pressed" from="HUD/UpgradeMenu/Inner/UpgradeButton1" to="." method="_on_UpgradeButton1_pressed"]
+[connection signal="pressed" from="HUD/UpgradeMenu/Inner/UpgradeButton2" to="." method="_on_UpgradeButton1_pressed"]
+[connection signal="pressed" from="HUD/UpgradeMenu/Inner/UpgradeButton3" to="." method="_on_UpgradeButton1_pressed"]
+[connection signal="pressed" from="HUD/UpgradeMenu/Inner/UpgradeButton4" to="." method="_on_UpgradeButton1_pressed"]

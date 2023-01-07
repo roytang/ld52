@@ -7,6 +7,8 @@ extends Area2D
 enum PICKUP_TYPE {HEALTH, ENERGY, MINERALS}
 export(PICKUP_TYPE) var pickuptype = PICKUP_TYPE.HEALTH
 
+export var amount = 10
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
@@ -19,5 +21,5 @@ func _ready():
 
 func _on_HealthPickup_body_entered(body):
 	if body.is_in_group("player"):
-		body.emit_signal("pickup", pickuptype)
+		body.emit_signal("pickup", pickuptype, amount)
 		queue_free()

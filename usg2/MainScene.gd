@@ -47,6 +47,27 @@ var Hunter = {
 
 var spawn_list = [Seeker, Seeker, Seeker, Spreader, Hunter]
 
+### Upgrades
+
+var SpeedUpgrade1 = {
+	"title": "Engine Upgrade 1",
+	"text": "Increase your ship's movement speed.",
+	"icon": "res://assets/speedup.png"
+}
+var HPUpgrade1 = {
+	"title": "Hull Upgrade 1",
+	"text": "Increase your ship's HP. Also fully heals your HP.",
+	"icon": "res://assets/hpup.png"
+}
+
+var available_upgrades = [HPUpgrade1, SpeedUpgrade1]
+var upgrade_buttons = [
+	"HUD/UpgradeMenu/Inner/UpgradeButton1", 
+	"HUD/UpgradeMenu/Inner/UpgradeButton2", 
+	"HUD/UpgradeMenu/Inner/UpgradeButton3", 
+	"HUD/UpgradeMenu/Inner/UpgradeButton4", 
+	]
+
 func _ready():
 	randomize()
 	call_deferred("start_game")
@@ -58,6 +79,8 @@ func start_game():
 	_player.position.y = 200
 	_player.connect("stats_changed", $HUD, "_on_player_stats_changed")
 	_player.emit_signal("stats_changed", _player)
+	_player.connect("select_upgrade", self, "start_upgrade")
+	start_upgrade()
 	
 	$SpawnTimer.wait_time = timer_base_time + randf() * timer_base_time
 	$SpawnTimer.start()
@@ -102,4 +125,42 @@ func _on_SpawnTimer_timeout():
 	# random wait until next drop
 	$SpawnTimer.wait_time = timer_base_time + randf() * timer_base_time
 
+func start_upgrade():
+	get_tree().paused = true
+	$HUD/UpgradeMenu.visible = true
+	var index = 0
+	var this_upgrade_set = available_upgrades.duplicate()
+	this_upgrade_set.shuffle()
+	for upgrade in this_upgrade_set:
+		var button = get_node(upgrade_buttons[index])
+		button.visible = true
+		button.icon = load(upgrade["icon"])
+		button.get_node("Title").text = upgrade["title"]
+		button.get_node("Description").text = upgrade["text"]
+		index = index + 1
+	if index < 4:
+		$HUD/UpgradeMenu/Inner/UpgradeButton4.visible = false
+	if index < 3:
+		$HUD/UpgradeMenu/Inner/UpgradeButton3.visible = false
+	if index < 2:
+		$HUD/UpgradeMenu/Inner/UpgradeButton2.visible = false
 
+func _on_UpgradeButton1_pressed():
+	print("Upgrade 1 selected!")
+	$HUD/UpgradeMenu.visible = false
+	get_tree().paused = false
+
+func _on_UpgradeButton2_pressed():
+	print("Upgrade 2 selected!")
+	$HUD/UpgradeMenu.visible = false
+	get_tree().paused = false
+
+func _on_UpgradeButton3_pressed():
+	print("Upgrade 3 selected!")
+	$HUD/UpgradeMenu.visible = false
+	get_tree().paused = false
+
+func _on_UpgradeButton4_pressed():
+	print("Upgrade 4 selected!")
+	$HUD/UpgradeMenu.visible = false
+	get_tree().paused = false

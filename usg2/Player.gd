@@ -3,6 +3,7 @@ extends KinematicBody2D
 signal hit
 signal stats_changed
 signal pickup
+signal select_upgrade
 
 enum PICKUP_TYPE {HEALTH, ENERGY, MINERALS}
 
@@ -61,19 +62,20 @@ func _on_Player_hit(damage):
 		die()
 
 
-func _on_Player_pickup(pickup):
+func _on_Player_pickup(pickup, amount):
 	if pickup == PICKUP_TYPE.ENERGY:
-		energycurrent = energycurrent + 10
+		energycurrent = energycurrent + amount
 		if energycurrent > energymax:
 			energycurrent = energymax
 	if pickup == PICKUP_TYPE.HEALTH:
-		hpcurrent = hpcurrent + 10
+		hpcurrent = hpcurrent + amount
 		if hpcurrent > hpmax:
 			hpcurrent = hpmax
 	if pickup == PICKUP_TYPE.MINERALS:
-		mineralscurrent = mineralscurrent + 10
-		if mineralscurrent > mineralsmax:
-			mineralscurrent = mineralsmax
+		mineralscurrent = mineralscurrent + amount
+		if mineralscurrent >= mineralsmax:
+			mineralscurrent = 0
+			emit_signal("select_upgrade")
 	emit_signal("stats_changed", self)
 		
 
@@ -86,3 +88,5 @@ func _on_EnergyDrainTimer_timeout():
 		
 func die():
 	print("YOU DIED!")
+	
+
