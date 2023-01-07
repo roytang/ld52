@@ -14,6 +14,10 @@ config/name="usg2"
 run/main_scene="res://MainScene.tscn"
 config/icon="res://icon.png"
 
+[global]
+
+gravity=false
+
 [gui]
 
 common/drop_mouse_on_gui_input_disabled=true
@@ -52,6 +56,7 @@ ui_down={
 [physics]
 
 common/enable_pause_aware_picking=true
+2d/default_gravity=0
 
 [rendering]
 

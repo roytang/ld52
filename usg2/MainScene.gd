@@ -5,6 +5,7 @@ var asteroid_scene = preload("res://Asteroid.tscn")
 var _player
 
 export var timer_base_time = 1.5
+var spawn_count = 0
 
 var spawn_points = [
 	Vector2(0, -100),
@@ -28,6 +29,19 @@ var inner_points = [
 	Vector2(512, 400),
 ]
 
+var Spreader = {
+			"name": "Spreader",
+			"scene": "res://Enemies/Spreader.tscn",
+			"id": 2
+		}
+var Seeker = {
+			"name": "Seeker",
+			"scene": "res://Enemies/Seeker.tscn",
+			"id": 3
+		}
+
+var spawn_list = [Seeker, Seeker, Spreader]
+
 func _ready():
 	randomize()
 	call_deferred("start_game")
@@ -37,13 +51,16 @@ func start_game():
 	get_tree().get_root().add_child(_player)
 	_player.position.x = 200
 	_player.position.y = 200
+	_player.connect("stats_changed", $HUD, "_on_player_stats_changed")
+	_player.emit_signal("stats_changed", _player)
 	
-	$AsteroidSpawner.wait_time = timer_base_time + randf() * timer_base_time
-	$AsteroidSpawner.start()
+	$SpawnTimer.wait_time = timer_base_time + randf() * timer_base_time
+	$SpawnTimer.start()
 	
 
 
 func _on_AsteroidSpawner_timeout():
+	return
 	var asteroid = asteroid_scene.instance()
 	get_tree().get_root().add_child(asteroid)
 	var count_opts = spawn_points.size()
@@ -64,3 +81,20 @@ func _on_AsteroidSpawner_timeout():
 	asteroid.rotation_degrees = randi() % 360
 	asteroid.direction = direction.normalized()
 	asteroid.size_factor = size_factor
+
+
+func _on_SpawnTimer_timeout():
+	if is_instance_valid(_player):
+		var count_opts = spawn_list.size()
+		var new_spawn_data = spawn_list[randi() % count_opts]
+		var spawn_scene = load(new_spawn_data["scene"])
+		var spawn_instance = spawn_scene.instance()
+		count_opts = spawn_points.size()
+		spawn_instance.position = spawn_points[randi() % count_opts]
+		get_tree().get_root().call_deferred("add_child", spawn_instance)
+		spawn_count = spawn_count + 1
+
+	# random wait until next drop
+	$SpawnTimer.wait_time = timer_base_time + randf() * timer_base_time
+
+

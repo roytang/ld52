@@ -1,8 +1,10 @@
 extends KinematicBody2D
 
-
+signal hit
+signal stats_changed
 export var speed = 250
-
+export var hpmax = 100
+var hpcurrent = hpmax
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -24,3 +26,9 @@ func _physics_process(delta):
 		
 	move_and_slide(direction * speed)
 		
+
+
+func _on_Player_hit(damage):
+	print("PLAYER HIT")
+	hpcurrent = hpcurrent - damage
+	emit_signal("stats_changed", self)
