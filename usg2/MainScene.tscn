@@ -263,6 +263,6 @@ shape = SubResource( 4 )
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
 [connection signal="pressed" from="HUD/UpgradeMenu/Inner/UpgradeButton1" to="." method="_on_UpgradeButton1_pressed"]
-[connection signal="pressed" from="HUD/UpgradeMenu/Inner/UpgradeButton2" to="." method="_on_UpgradeButton1_pressed"]
-[connection signal="pressed" from="HUD/UpgradeMenu/Inner/UpgradeButton3" to="." method="_on_UpgradeButton1_pressed"]
-[connection signal="pressed" from="HUD/UpgradeMenu/Inner/UpgradeButton4" to="." method="_on_UpgradeButton1_pressed"]
+[connection signal="pressed" from="HUD/UpgradeMenu/Inner/UpgradeButton2" to="." method="_on_UpgradeButton2_pressed"]
+[connection signal="pressed" from="HUD/UpgradeMenu/Inner/UpgradeButton3" to="." method="_on_UpgradeButton3_pressed"]
+[connection signal="pressed" from="HUD/UpgradeMenu/Inner/UpgradeButton4" to="." method="_on_UpgradeButton4_pressed"]

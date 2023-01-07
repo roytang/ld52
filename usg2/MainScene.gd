@@ -1,6 +1,6 @@
 extends Node2D
 
-var player_scene = preload("res://Player.tscn")
+var player_scene = preload("res://Player/Player.tscn")
 var asteroid_scene = preload("res://Asteroid.tscn")
 var _player
 
@@ -52,21 +52,38 @@ var spawn_list = [Seeker, Seeker, Seeker, Spreader, Hunter]
 var SpeedUpgrade1 = {
 	"title": "Engine Upgrade 1",
 	"text": "Increase your ship's movement speed.",
-	"icon": "res://assets/speedup.png"
+	"icon": "res://assets/speedup.png",
+	"executor": "res://Player/SpeedUp1.tscn"
 }
 var HPUpgrade1 = {
 	"title": "Hull Upgrade 1",
 	"text": "Increase your ship's HP. Also fully heals your HP.",
-	"icon": "res://assets/hpup.png"
+	"icon": "res://assets/hpup.png",
+	"executor": "res://Player/HPUp1.tscn"
 }
 
-var available_upgrades = [HPUpgrade1, SpeedUpgrade1]
+var DmgUp1 = {
+	"title": "Cannon Power 1",
+	"text": "Increase the damage dealt by your cannon bullets.",
+	"icon": "res://assets/dmgup.png",
+	"executor": "res://Player/DMGUp.tscn"
+}
+
+var FireRateUp1 = {
+	"title": "Cannon Reload 1",
+	"text": "Increases the fire rate of your cannon.",
+	"icon": "res://assets/firerateup.png",
+	"executor": "res://Player/FireRateUp.tscn"
+}
+
+var available_upgrades = [HPUpgrade1, SpeedUpgrade1, FireRateUp1, DmgUp1]
 var upgrade_buttons = [
 	"HUD/UpgradeMenu/Inner/UpgradeButton1", 
 	"HUD/UpgradeMenu/Inner/UpgradeButton2", 
 	"HUD/UpgradeMenu/Inner/UpgradeButton3", 
 	"HUD/UpgradeMenu/Inner/UpgradeButton4", 
 	]
+var assigned_upgrades = []
 
 func _ready():
 	randomize()
@@ -137,6 +154,7 @@ func start_upgrade():
 		button.icon = load(upgrade["icon"])
 		button.get_node("Title").text = upgrade["title"]
 		button.get_node("Description").text = upgrade["text"]
+		assigned_upgrades.append(upgrade["executor"])
 		index = index + 1
 	if index < 4:
 		$HUD/UpgradeMenu/Inner/UpgradeButton4.visible = false
@@ -144,23 +162,23 @@ func start_upgrade():
 		$HUD/UpgradeMenu/Inner/UpgradeButton3.visible = false
 	if index < 2:
 		$HUD/UpgradeMenu/Inner/UpgradeButton2.visible = false
+	print(assigned_upgrades)
 
 func _on_UpgradeButton1_pressed():
-	print("Upgrade 1 selected!")
-	$HUD/UpgradeMenu.visible = false
-	get_tree().paused = false
+	exec_upgrade(0)
 
 func _on_UpgradeButton2_pressed():
-	print("Upgrade 2 selected!")
-	$HUD/UpgradeMenu.visible = false
-	get_tree().paused = false
+	exec_upgrade(1)
 
 func _on_UpgradeButton3_pressed():
-	print("Upgrade 3 selected!")
-	$HUD/UpgradeMenu.visible = false
-	get_tree().paused = false
+	exec_upgrade(2)
 
 func _on_UpgradeButton4_pressed():
-	print("Upgrade 4 selected!")
+	exec_upgrade(3)
+
+func exec_upgrade(index):
+	var executor_scene = assigned_upgrades[index]
+	var executor_instance = load(executor_scene).instance()
+	executor_instance.apply_upgrade(_player)
 	$HUD/UpgradeMenu.visible = false
 	get_tree().paused = false
