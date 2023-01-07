@@ -1,7 +1,14 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Player/Player.gd" type="Script" id=1]
 [ext_resource path="res://assets/ship.png" type="Texture" id=2]
+[ext_resource path="res://hitflash.gdshader" type="Shader" id=3]
+
+[sub_resource type="ShaderMaterial" id=4]
+resource_local_to_scene = true
+shader = ExtResource( 3 )
+shader_param/flash_color = Color( 1, 1, 1, 1 )
+shader_param/flash_modifier = 0.0
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 13.0
@@ -17,6 +24,7 @@ collision_layer = 3
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 4 )
 rotation = 1.5708
 texture = ExtResource( 2 )
 
@@ -34,6 +42,10 @@ position = Vector2( 30, 0 )
 [node name="EnergyDrainTimer" type="Timer" parent="."]
 autostart = true
 
+[node name="FlashTimer" type="Timer" parent="."]
+wait_time = 0.2
+
 [connection signal="hit" from="." to="." method="_on_Player_hit"]
 [connection signal="pickup" from="." to="." method="_on_Player_pickup"]
 [connection signal="timeout" from="EnergyDrainTimer" to="." method="_on_EnergyDrainTimer_timeout"]
+[connection signal="timeout" from="FlashTimer" to="." method="_on_FlashTimer_timeout"]

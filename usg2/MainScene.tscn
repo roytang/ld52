@@ -120,6 +120,7 @@ color = Color( 0, 0.0627451, 1, 1 )
 
 [node name="UpgradeMenu" type="ColorRect" parent="HUD"]
 pause_mode = 2
+visible = false
 margin_left = 128.0
 margin_top = 75.0
 margin_right = 896.0
@@ -233,31 +234,33 @@ margin_bottom = 121.0
 text = "Upgrade 1 Description"
 autowrap = true
 
-[node name="LeftWall" type="KinematicBody2D" parent="."]
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="LeftWall" type="KinematicBody2D" parent="Walls"]
 collision_layer = 16
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="LeftWall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/LeftWall"]
 position = Vector2( -10, 373 )
 shape = SubResource( 3 )
 
-[node name="RightWall" type="KinematicBody2D" parent="."]
+[node name="RightWall" type="KinematicBody2D" parent="Walls"]
 collision_layer = 16
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="RightWall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall"]
 position = Vector2( 1032, 371 )
 shape = SubResource( 3 )
 
-[node name="TopWall" type="KinematicBody2D" parent="."]
+[node name="TopWall" type="KinematicBody2D" parent="Walls"]
 collision_layer = 16
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TopWall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/TopWall"]
 position = Vector2( 502, -16 )
 shape = SubResource( 4 )
 
-[node name="BottomWall" type="KinematicBody2D" parent="."]
+[node name="BottomWall" type="KinematicBody2D" parent="Walls"]
 collision_layer = 16
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="BottomWall"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/BottomWall"]
 position = Vector2( 516, 615 )
 shape = SubResource( 4 )
 

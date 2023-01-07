@@ -97,7 +97,6 @@ func start_game():
 	_player.connect("stats_changed", $HUD, "_on_player_stats_changed")
 	_player.emit_signal("stats_changed", _player)
 	_player.connect("select_upgrade", self, "start_upgrade")
-	start_upgrade()
 	
 	$SpawnTimer.wait_time = timer_base_time + randf() * timer_base_time
 	$SpawnTimer.start()

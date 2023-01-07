@@ -17,14 +17,37 @@ var minerals_pickup = "res://Items/MineralsPickup.tscn"
 
 var drop_list = [minerals_pickup, minerals_pickup, minerals_pickup, energy_pickup, health_pickup]
 
+# hit flash stuff
+var sprite
+var flash_timer
+const SHADER = preload("res://hitflash.gdshader")
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
 	_player = get_node("/root/Player")
 	hpcurrent = hpmax
 	connect("hit", self, "_on_Enemy_hit")
+	
+	sprite = $Sprite
+	if is_instance_valid(sprite):
+		flash_timer = Timer.new()
+		flash_timer.wait_time = 0.2
+		add_child(flash_timer)
+		flash_timer.connect("timeout", self, "_on_flash_timeout")
+		
+		var mat = ShaderMaterial.new()
+		mat.shader = SHADER
+		# mat.set_shader(SHADER)
+		sprite.set_material(mat)
+
+		
 
 func _on_Enemy_hit(damage):
+	if is_instance_valid(sprite):
+		sprite.material.set_shader_param("flash_modifier", 1.0)
+		flash_timer.start()
+	
 	print("Hit for damage ", damage)
 	if can_be_hit:
 		hpcurrent = hpcurrent - damage
@@ -48,3 +71,7 @@ func die():
 	get_tree().get_root().call_deferred("add_child", pickup)
 	
 	queue_free()
+
+
+func _on_flash_timeout():
+	sprite.material.set_shader_param("flash_modifier", 0.0)

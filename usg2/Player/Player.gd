@@ -56,6 +56,8 @@ func _physics_process(delta):
 
 
 func _on_Player_hit(damage):
+	$Sprite.material.set_shader_param("flash_modifier", 1.0)
+	$FlashTimer.start()
 	hpcurrent = hpcurrent - damage
 	emit_signal("stats_changed", self)
 	if hpcurrent < 0:
@@ -76,6 +78,7 @@ func _on_Player_pickup(pickup, amount):
 		if mineralscurrent >= mineralsmax:
 			mineralscurrent = 0
 			emit_signal("select_upgrade")
+			mineralsmax = mineralsmax + 20
 	emit_signal("stats_changed", self)
 		
 
@@ -90,3 +93,7 @@ func die():
 	print("YOU DIED!")
 	
 
+
+
+func _on_FlashTimer_timeout():
+	$Sprite.material.set_shader_param("flash_modifier", 0.0)
