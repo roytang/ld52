@@ -40,6 +40,8 @@ func _ready():
 		mat.shader = SHADER
 		# mat.set_shader(SHADER)
 		sprite.set_material(mat)
+		
+	var collision_shape = $CollisionShape2D
 
 		
 

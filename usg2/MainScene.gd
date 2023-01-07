@@ -95,6 +95,7 @@ func start_game():
 	_player.position.x = 200
 	_player.position.y = 200
 	_player.connect("stats_changed", $HUD, "_on_player_stats_changed")
+	_player.connect("died", self, "_on_player_died")
 	_player.emit_signal("stats_changed", _player)
 	_player.connect("select_upgrade", self, "start_upgrade")
 	
@@ -143,10 +144,15 @@ func _on_SpawnTimer_timeout():
 
 func start_upgrade():
 	get_tree().paused = true
+	for button in upgrade_buttons:
+		var actual_button = get_node(button)
+		actual_button.visible = false
 	$HUD/UpgradeMenu.visible = true
+	yield(get_tree().create_timer(0.5), "timeout")
 	var index = 0
 	var this_upgrade_set = available_upgrades.duplicate()
 	this_upgrade_set.shuffle()
+	assigned_upgrades = []
 	for upgrade in this_upgrade_set:
 		var button = get_node(upgrade_buttons[index])
 		button.visible = true
@@ -155,12 +161,6 @@ func start_upgrade():
 		button.get_node("Description").text = upgrade["text"]
 		assigned_upgrades.append(upgrade["executor"])
 		index = index + 1
-	if index < 4:
-		$HUD/UpgradeMenu/Inner/UpgradeButton4.visible = false
-	if index < 3:
-		$HUD/UpgradeMenu/Inner/UpgradeButton3.visible = false
-	if index < 2:
-		$HUD/UpgradeMenu/Inner/UpgradeButton2.visible = false
 	print(assigned_upgrades)
 
 func _on_UpgradeButton1_pressed():
@@ -181,3 +181,9 @@ func exec_upgrade(index):
 	executor_instance.apply_upgrade(_player)
 	$HUD/UpgradeMenu.visible = false
 	get_tree().paused = false
+
+func _on_player_died():
+	get_tree().paused = true
+	$HUD/MessageBox/Label.text = "\n\n\nYOU DIED!!!\n\n\n(There is no restart yet, so just reload or whatever.)"
+	$HUD/MessageBox.visible = true
+	

@@ -4,6 +4,7 @@ signal hit
 signal stats_changed
 signal pickup
 signal select_upgrade
+signal died
 
 enum PICKUP_TYPE {HEALTH, ENERGY, MINERALS}
 
@@ -91,7 +92,7 @@ func _on_EnergyDrainTimer_timeout():
 		
 func die():
 	print("YOU DIED!")
-	
+	emit_signal("died")
 
 
 

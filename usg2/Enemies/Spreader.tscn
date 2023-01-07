@@ -11,6 +11,7 @@ height = 10.0
 
 [node name="Spreader" type="KinematicBody2D" groups=["enemy"]]
 collision_layer = 4
+collision_mask = 0
 script = ExtResource( 3 )
 speed = 90
 hpmax = 30
