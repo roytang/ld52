@@ -26,6 +26,9 @@ var fire_rate = 0.3
 var can_fire = true
 var _player = self
 
+var bomb_cost = 100
+var bomb_damage = 30
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var cannon = $PlayerCannon
@@ -39,6 +42,17 @@ func _process(delta):
 		can_fire = false
 		yield(get_tree().create_timer(fire_rate), "timeout")
 		can_fire = true
+		
+	if Input.is_action_pressed("fire2"):
+		if energycurrent >= bomb_cost:
+			$AnimationPlayer.play("bombex")
+			$BombSound.play()
+			get_tree().call_group("enemy", "emit_signal", "hit", bomb_damage)
+			get_tree().call_group("enemy_bullet", "queue_free")
+			energycurrent = energycurrent - bomb_cost
+			emit_signal("stats_changed", self)
+		else:
+			$FailSound.play()
 		
 func _physics_process(delta):
 	var direction = Vector2()
@@ -85,10 +99,7 @@ func _on_Player_pickup(pickup, amount):
 
 
 func _on_EnergyDrainTimer_timeout():
-	energycurrent = energycurrent - 1
-	emit_signal("stats_changed", self)
-	if energycurrent <= 0:
-		die()
+	pass
 		
 func die():
 	var explosion_instance = explosion.instance()

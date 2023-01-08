@@ -45,6 +45,7 @@ func _ready():
 	if composite:
 		connect("child_created", self, "_on_child_created")
 		connect("child_destroyed", self, "_on_child_destroyed")
+		can_be_hit = false
 	get_parent().emit_signal("child_created")
 		
 	sprite = $Sprite
@@ -68,15 +69,13 @@ func _process(delta):
 		look_at(_player.get_global_position())
 
 func _on_Enemy_hit(damage):
-	if is_instance_valid(sprite):
-		sprite.material.set_shader_param("flash_modifier", 1.0)
-		flash_timer.start()
-	
-	print("Hit for damage ", damage)
-	hit_sound.play()
 	if can_be_hit:
+		if is_instance_valid(sprite):
+			sprite.material.set_shader_param("flash_modifier", 1.0)
+			flash_timer.start()
+			
+		hit_sound.play()
 		hpcurrent = hpcurrent - damage
-		print("Remaining HP ", hpcurrent)
 		can_be_hit = false
 		if hpcurrent <= 0:
 			die()

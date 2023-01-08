@@ -10,7 +10,6 @@ func _ready():
 
 
 func _on_Bullet_body_entered(body):
-	print(body, friendly)
 	if friendly:
 		body.emit_signal("hit", damage)
 		queue_free()
@@ -25,4 +24,5 @@ func _on_Timer_timeout():
 
 
 func _on_Bullet_hit():
+	print("BULLET HIT!")
 	queue_free()

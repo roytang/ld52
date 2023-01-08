@@ -271,6 +271,7 @@ func spawn(spawn_list, timer, multiplier):
 		var spawn_instance = spawn_scene.instance()
 		count_opts = spawn_points.size()
 		spawn_instance.position = spawn_points[randi() % count_opts]
+		spawn_instance.add_to_group("enemy")
 		get_tree().get_root().call_deferred("add_child", spawn_instance)
 		spawn_count = spawn_count + 1
 
