@@ -5,8 +5,8 @@ var asteroid_scene = preload("res://Asteroid.tscn")
 var _player
 
 export var timer_base_time = 1.0
-export var mid_timer_mult = 12.0
-export var heavy_timer_mult = 25.0
+export var mid_timer_mult = 15.0
+export var heavy_timer_mult = 40.0
 var spawn_count = 0
 
 var spawn_points = [
@@ -136,8 +136,16 @@ var MoreCannons = {
 	"next": [EvenMoreCannons]
 }
 
+var Harvester = {
+	"title": "Harvester",
+	"text": "Automatically pull pickups towards you for easy harvesting.",
+	"icon": "res://assets/morecannons.png",
+	"executor": "res://Player/HarvesterUpgrade.tscn",
+	"remove": true,
+	"next": []
+}
 
-var available_upgrades = [MoreCannons, HPUpgrade1, SpeedUpgrade1, FireRateUp1, DmgUp1]
+var available_upgrades = [Harvester, MoreCannons, HPUpgrade1, SpeedUpgrade1, FireRateUp1, DmgUp1]
 var upgrade_buttons = [
 	"HUD/UpgradeMenu/Inner/UpgradeButton1", 
 	"HUD/UpgradeMenu/Inner/UpgradeButton2", 

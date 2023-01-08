@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id=5]
 radius = 4.0
 
-[node name="MineralsPickup" type="Area2D"]
+[node name="MineralsPickup" type="Area2D" groups=["pickups"]]
 script = ExtResource( 2 )
 pickuptype = 2
 amount = 20
