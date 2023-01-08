@@ -34,6 +34,7 @@ func _ready():
 			var new_component_data = component_list[randi() % count_opts]
 			var comp_scene = load(new_component_data["scene"])
 			var comp_instance = comp_scene.instance()
+			comp_instance._player = _parent._player
 			comp_instance.position = child.position
 			_parent.call_deferred("add_child", comp_instance)
 

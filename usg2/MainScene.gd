@@ -8,7 +8,7 @@ var asteroid_scene = preload("res://Asteroid.tscn")
 var _player
 
 export var timer_base_time = 1.0
-export var mid_timer_mult = 15.0
+export var mid_timer_mult = 2.0
 export var heavy_timer_mult = 40.0
 var spawn_count = 0
 
@@ -287,7 +287,7 @@ func _ready():
 
 func start_game():
 	_player = player_scene.instance()
-	get_tree().get_root().add_child(_player)
+	add_child(_player)
 	_player.position.x = 200
 	_player.position.y = 200
 	_player.connect("stats_changed", $HUD, "_on_player_stats_changed")
@@ -353,7 +353,7 @@ func start_upgrade():
 		index = index + 1
 		if index >= 4:
 			break
-	print(assigned_upgrades)
+	# print(assigned_upgrades)
 
 func _on_UpgradeButton1_pressed():
 	exec_upgrade(0)
@@ -428,6 +428,7 @@ func _on_HeavySpawnTimer_timeout():
 
 func _on_Button_pressed():
 	get_tree().paused = false
+	_player.queue_free()
 	var root = get_tree().root
 	for N in root.get_children():
 		N.queue_free()
@@ -435,6 +436,7 @@ func _on_Button_pressed():
 
 func _on_Button2_pressed():
 	get_tree().paused = false
+	_player.queue_free()
 	var root = get_tree().root
 	for N in root.get_children():
 		N.queue_free()
