@@ -1,5 +1,8 @@
 extends Node2D
 
+signal restart
+signal menu
+
 var player_scene = preload("res://Player/Player.tscn")
 var asteroid_scene = preload("res://Asteroid.tscn")
 var _player
@@ -385,7 +388,6 @@ func exec_upgrade(index):
 
 func _on_player_died():
 	get_tree().paused = true
-	$HUD/MessageBox/Label.text = "\n\n\nYOU DIED!!!\n\n\n(There is no restart yet, so just reload or whatever.)"
 	$HUD/MessageBox.visible = true
 	
 
@@ -405,6 +407,8 @@ func spawn(spawn_list, timer, multiplier):
 		var spawn_scene = load(new_spawn_data["scene"])
 		var spawn_instance = spawn_scene.instance()
 		count_opts = spawn_points.size()
+		print("SPAWN PLAYER ", _player)
+		spawn_instance._player = _player
 		spawn_instance.position = spawn_points[randi() % count_opts]
 		spawn_instance.add_to_group("enemy")
 		get_tree().get_root().call_deferred("add_child", spawn_instance)
@@ -420,3 +424,18 @@ func _on_MidSpawnTimer_timeout():
 
 func _on_HeavySpawnTimer_timeout():
 	spawn(_heavy_spawn_list, $HeavySpawnTimer, heavy_timer_mult)
+
+
+func _on_Button_pressed():
+	get_tree().paused = false
+	var root = get_tree().root
+	for N in root.get_children():
+		N.queue_free()
+	get_tree().change_scene("res://MainScene.tscn")
+
+func _on_Button2_pressed():
+	get_tree().paused = false
+	var root = get_tree().root
+	for N in root.get_children():
+		N.queue_free()
+	get_tree().change_scene("res://Launcher.tscn")

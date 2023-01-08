@@ -99,7 +99,7 @@ func _on_Player_pickup(pickup, amount):
 		if mineralscurrent >= mineralsmax:
 			mineralscurrent = 0
 			emit_signal("select_upgrade")
-			mineralsmax = mineralsmax + 20
+			mineralsmax = mineralsmax + 30
 	emit_signal("stats_changed", self)
 		
 

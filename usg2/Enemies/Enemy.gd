@@ -38,7 +38,6 @@ var hit_sound
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
-	_player = get_node("/root/Player")
 	hpcurrent = hpmax
 	connect("hit", self, "_on_Enemy_hit")
 	
