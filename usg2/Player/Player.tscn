@@ -95,7 +95,10 @@ stream = ExtResource( 7 )
 [node name="FailSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 8 )
 
+[node name="AutofireTimer" type="Timer" parent="."]
+
 [connection signal="hit" from="." to="." method="_on_Player_hit"]
 [connection signal="pickup" from="." to="." method="_on_Player_pickup"]
 [connection signal="timeout" from="RegenTimer" to="." method="_on_RegenTimer_timeout"]
 [connection signal="timeout" from="FlashTimer" to="." method="_on_FlashTimer_timeout"]
+[connection signal="timeout" from="AutofireTimer" to="." method="_on_AutofireTimer_timeout"]

@@ -16,6 +16,12 @@ func _on_Timer_timeout():
 		var bullet_instance = bullet.instance()
 		bullet_instance.position = get_global_position()
 		bullet_instance.friendly = false
+		
+		var level_bonus = 0
+		if _player.level > 30:
+			level_bonus = _player.level - 20
+			bullet_instance.damage = bullet_instance.damage + level_bonus
+		
 		bullet_instance.add_to_group("enemy")
 		bullet_instance.add_to_group("enemy_bullet")
 		# enemy bullets can only hit the player on layer 2

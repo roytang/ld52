@@ -147,8 +147,9 @@ margin_top = 22.0
 margin_right = 737.0
 margin_bottom = 55.0
 theme = ExtResource( 2 )
-text = "You collected enough minerals to upgrade your ship! Select an upgrade below."
+text = "You collected enough minerals to upgrade your ship! Select an upgrade below. (Each upgrade will also heal a bit of HP)"
 align = 1
+autowrap = true
 
 [node name="UpgradeButton1" type="Button" parent="HUD/UpgradeMenu/Inner"]
 margin_left = 87.0
@@ -315,7 +316,7 @@ text = "THIS IS THE PAUSE MENU
 
 WSAD / Arrow keys - move your ship
 Mouse - aim your ship
-Spacebar / LMB - fire your cannons
+(Your cannons fire automatically)
 Q / RMB - use your neutron bomb. Requires full energy
 Esc - Pause/Unpause"
 align = 1

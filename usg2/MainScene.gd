@@ -129,7 +129,7 @@ var HPUpgrade2 = {
 }
 var HPUpgrade1 = {
 	"title": "Hull Upgrade I",
-	"text": "Increases your ship's HP. Also fully heals your HP.",
+	"text": "Increases your ship's HP.",
 	"icon": "res://assets/hpup.png",
 	"executor": "res://Player/Upgrades/HPUp1.tscn",
 	"remove": true,
@@ -332,7 +332,12 @@ func _on_AsteroidSpawner_timeout():
 
 
 func _on_SpawnTimer_timeout():
-	spawn(_spawn_list, $SpawnTimer, 1.0)
+	var how_many = 1
+	if _player.level > 10:
+		how_many = _player.level / 10
+	# spawn more tiny guys at higher levels
+	for i in range(how_many):
+		spawn(_spawn_list, $SpawnTimer, 1.0)
 
 func start_upgrade():
 	get_tree().paused = true

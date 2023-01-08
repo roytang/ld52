@@ -38,15 +38,17 @@ export var regen = 0
 func _ready():
 	var cannon = $PlayerCannon
 	connect("fire_cannons", cannon, "fire")
+	$AutofireTimer.wait_time = fire_rate
+	$AutofireTimer.start()
 
 func _process(delta):
 	look_at(get_global_mouse_position())
 
-	if Input.is_action_pressed("fire") and can_fire:
-		emit_signal("fire_cannons")
-		can_fire = false
-		yield(get_tree().create_timer(fire_rate), "timeout")
-		can_fire = true
+	#if Input.is_action_pressed("fire") and can_fire:
+	#	emit_signal("fire_cannons")
+	#	can_fire = false
+	#	yield(get_tree().create_timer(fire_rate), "timeout")
+	#	can_fire = true
 		
 	if Input.is_action_pressed("fire2"):
 		if energycurrent >= bomb_cost:
@@ -128,3 +130,7 @@ func _on_RegenTimer_timeout():
 		if hpcurrent > hpmax:
 			hpcurrent = hpmax
 		emit_signal("stats_changed")
+
+
+func _on_AutofireTimer_timeout():
+	emit_signal("fire_cannons")

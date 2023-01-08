@@ -12,3 +12,4 @@ func _ready():
 
 func apply_upgrade(player):
 	player.fire_rate = player.fire_rate - 0.03
+	player.get_node("AutofireTimer").wait_time = player.fire_rate
