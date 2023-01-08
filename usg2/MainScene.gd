@@ -8,8 +8,8 @@ var asteroid_scene = preload("res://Asteroid.tscn")
 var _player
 
 export var timer_base_time = 1.0
-export var mid_timer_mult = 2.0
-export var heavy_timer_mult = 40.0
+export var mid_timer_mult = 15.0
+export var heavy_timer_mult = 45.0
 var spawn_count = 0
 
 var spawn_points = [
@@ -387,6 +387,8 @@ func exec_upgrade(index):
 	get_tree().paused = false
 
 func _on_player_died():
+	$HUD/MessageBox/TimeSurvived.text = "You survived for " + $TimeCounter.get_time_str() + " !"
+	$HUD/MessageBox/ShipsSurvived.text = "You encountered " + str(spawn_count) + " enemy ship(s)."	
 	get_tree().paused = true
 	$HUD/MessageBox.visible = true
 	
