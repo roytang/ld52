@@ -6,6 +6,7 @@ var _player
 
 export var timer_base_time = 1.0
 export var mid_timer_mult = 12.0
+export var heavy_timer_mult = 25.0
 var spawn_count = 0
 
 var spawn_points = [
@@ -64,8 +65,21 @@ var DreadWing = {
 			"id": 6
 		}
 
+var Dreadnought = {
+			"name": "Dreadnought",
+			"scene": "res://Enemies/Dreadnought.tscn",
+			"id": 7
+		}
+
+var DeathWheel = {
+			"name": "DeathWheel",
+			"scene": "res://Enemies/DeathWheel.tscn",
+			"id": 8
+		}
+
 var _spawn_list = [Seeker, Seeker, Seeker, Spreader, Hunter]
 var _mid_spawn_list = [Corvette, Corvette, Cruiser, DreadWing]
+var _heavy_spawn_list = [Dreadnought, Dreadnought, DeathWheel]
 
 ### Upgrades
 
@@ -107,7 +121,7 @@ var FireRateUp1 = {
 var EvenMoreCannons = {
 	"title": "Even More Cannons",
 	"text": "Even more cannons!",
-	"icon": "res://assets/firerateup.png",
+	"icon": "res://assets/evenmorecannons.png",
 	"executor": "res://Player/EvenMoreCannonsUpgrade.tscn",
 	"remove": true,
 	"next": []
@@ -116,7 +130,7 @@ var EvenMoreCannons = {
 var MoreCannons = {
 	"title": "More Cannons",
 	"text": "More cannons!",
-	"icon": "res://assets/firerateup.png",
+	"icon": "res://assets/morecannons.png",
 	"executor": "res://Player/MoreCannonsUpgrade.tscn",
 	"remove": true,
 	"next": [EvenMoreCannons]
@@ -150,8 +164,9 @@ func start_game():
 	$SpawnTimer.wait_time = timer_base_time + randf() * timer_base_time
 	$SpawnTimer.start()
 	$MidSpawnTimer.wait_time = (mid_timer_mult * timer_base_time) + randf() * timer_base_time
-	print($MidSpawnTimer.wait_time)
 	$MidSpawnTimer.start()
+	$HeavySpawnTimer.wait_time = (heavy_timer_mult * timer_base_time) + randf() * timer_base_time
+	$HeavySpawnTimer.start()
 	
 
 
@@ -241,6 +256,8 @@ func _on_player_died():
 func spawn(spawn_list, timer, multiplier):
 	if is_instance_valid(_player):
 		var count_opts = spawn_list.size()
+		if count_opts == 0:
+			return
 		var new_spawn_data = spawn_list[randi() % count_opts]
 		var spawn_scene = load(new_spawn_data["scene"])
 		var spawn_instance = spawn_scene.instance()
@@ -254,3 +271,7 @@ func spawn(spawn_list, timer, multiplier):
 
 func _on_MidSpawnTimer_timeout():
 	spawn(_mid_spawn_list, $MidSpawnTimer, mid_timer_mult)
+
+
+func _on_HeavySpawnTimer_timeout():
+	spawn(_heavy_spawn_list, $HeavySpawnTimer, heavy_timer_mult)

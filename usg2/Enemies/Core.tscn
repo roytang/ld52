@@ -44,8 +44,8 @@ drop_count = 5
 
 [node name="Sprite" type="AnimatedSprite" parent="."]
 rotation = 1.49316
-scale = Vector2( 1, 1 )
 frames = SubResource( 3 )
+frame = 1
 playing = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

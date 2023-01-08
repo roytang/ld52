@@ -1,0 +1,92 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://assets/wheel.png" type="Texture" id=1]
+[ext_resource path="res://Enemies/HunterMovement.gd" type="Script" id=2]
+[ext_resource path="res://Enemies/Enemy.gd" type="Script" id=3]
+[ext_resource path="res://Enemies/Core.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Enemies/ComponentSlot.tscn" type="PackedScene" id=5]
+
+[sub_resource type="Animation" id=1]
+resource_name = "default"
+length = 9.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 9 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 359.0 ]
+}
+
+[node name="DeathWheel" type="KinematicBody2D" groups=["enemy"]]
+rotation = 2.57086
+collision_layer = 4
+collision_mask = 0
+script = ExtResource( 3 )
+hpmax = 30
+composite = true
+
+[node name="MovementController" type="Node2D" parent="."]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+
+[node name="Core" parent="." instance=ExtResource( 4 )]
+
+[node name="ComponentSlot" parent="Core" instance=ExtResource( 5 )]
+position = Vector2( 48, 48 )
+
+[node name="ComponentSlot2" parent="Core" instance=ExtResource( 5 )]
+position = Vector2( 48, -48 )
+
+[node name="ComponentSlot3" parent="Core" instance=ExtResource( 5 )]
+position = Vector2( -48, -48 )
+
+[node name="ComponentSlot4" parent="Core" instance=ExtResource( 5 )]
+position = Vector2( -48, 48 )
+
+[node name="Core2" parent="Core" instance=ExtResource( 4 )]
+position = Vector2( 64, 0 )
+
+[node name="ComponentSlot" parent="Core/Core2" instance=ExtResource( 5 )]
+position = Vector2( -32, 0 )
+
+[node name="ComponentSlot2" parent="Core/Core2" instance=ExtResource( 5 )]
+position = Vector2( 32, 0 )
+
+[node name="Core3" parent="Core" instance=ExtResource( 4 )]
+position = Vector2( -64, 0 )
+
+[node name="ComponentSlot" parent="Core/Core3" instance=ExtResource( 5 )]
+position = Vector2( -32, 0 )
+
+[node name="ComponentSlot2" parent="Core/Core3" instance=ExtResource( 5 )]
+position = Vector2( 32, 0 )
+
+[node name="Core4" parent="Core" instance=ExtResource( 4 )]
+position = Vector2( 0, 64 )
+
+[node name="ComponentSlot" parent="Core/Core4" instance=ExtResource( 5 )]
+position = Vector2( 0, -32 )
+
+[node name="ComponentSlot2" parent="Core/Core4" instance=ExtResource( 5 )]
+position = Vector2( 0, 32 )
+
+[node name="Core5" parent="Core" instance=ExtResource( 4 )]
+position = Vector2( 0, -64 )
+
+[node name="ComponentSlot" parent="Core/Core5" instance=ExtResource( 5 )]
+position = Vector2( 0, -32 )
+
+[node name="ComponentSlot2" parent="Core/Core5" instance=ExtResource( 5 )]
+position = Vector2( 0, 32 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "default"
+anims/default = SubResource( 1 )

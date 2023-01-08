@@ -49,6 +49,9 @@ stretch_mode = 2
 
 [node name="MidSpawnTimer" type="Timer" parent="."]
 
+[node name="HeavySpawnTimer" type="Timer" parent="."]
+wait_time = 30.0
+
 [node name="HUD" type="CanvasLayer" parent="."]
 script = ExtResource( 3 )
 
@@ -293,6 +296,7 @@ autoplay = true
 
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_SpawnTimer_timeout"]
 [connection signal="timeout" from="MidSpawnTimer" to="." method="_on_MidSpawnTimer_timeout"]
+[connection signal="timeout" from="HeavySpawnTimer" to="." method="_on_HeavySpawnTimer_timeout"]
 [connection signal="pressed" from="HUD/UpgradeMenu/Inner/UpgradeButton1" to="." method="_on_UpgradeButton1_pressed"]
 [connection signal="pressed" from="HUD/UpgradeMenu/Inner/UpgradeButton2" to="." method="_on_UpgradeButton2_pressed"]
 [connection signal="pressed" from="HUD/UpgradeMenu/Inner/UpgradeButton3" to="." method="_on_UpgradeButton3_pressed"]
