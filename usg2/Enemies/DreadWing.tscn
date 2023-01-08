@@ -1,12 +1,12 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://assets/corvette.png" type="Texture" id=1]
+[ext_resource path="res://assets/dreadwing.png" type="Texture" id=1]
 [ext_resource path="res://Enemies/SeekerMovement.gd" type="Script" id=2]
 [ext_resource path="res://Enemies/Enemy.gd" type="Script" id=3]
 [ext_resource path="res://Enemies/Core.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Enemies/ComponentSlot.tscn" type="PackedScene" id=5]
 
-[node name="Corvette" type="KinematicBody2D" groups=["enemy"]]
+[node name="DreadWing" type="KinematicBody2D" groups=["enemy"]]
 collision_layer = 4
 collision_mask = 0
 script = ExtResource( 3 )
@@ -23,10 +23,10 @@ texture = ExtResource( 1 )
 position = Vector2( -12, 0 )
 
 [node name="ComponentSlot" parent="Core" instance=ExtResource( 5 )]
-position = Vector2( 16, 27 )
+position = Vector2( -1, 32 )
 
 [node name="ComponentSlot2" parent="Core" instance=ExtResource( 5 )]
-position = Vector2( 15, -28 )
+position = Vector2( 1, -31 )
 
 [node name="ComponentSlot3" parent="Core" instance=ExtResource( 5 )]
 position = Vector2( 33, 0 )

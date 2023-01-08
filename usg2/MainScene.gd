@@ -70,33 +70,60 @@ var _mid_spawn_list = [Corvette, Corvette, Cruiser, DreadWing]
 ### Upgrades
 
 var SpeedUpgrade1 = {
-	"title": "Engine Upgrade 1",
+	"title": "Engine Upgrade",
 	"text": "Increase your ship's movement speed.",
 	"icon": "res://assets/speedup.png",
-	"executor": "res://Player/SpeedUp1.tscn"
+	"executor": "res://Player/SpeedUp1.tscn",
+	"remove": false,
+	"next": []
 }
 var HPUpgrade1 = {
-	"title": "Hull Upgrade 1",
+	"title": "Hull Upgrade",
 	"text": "Increase your ship's HP. Also fully heals your HP.",
 	"icon": "res://assets/hpup.png",
-	"executor": "res://Player/HPUp1.tscn"
+	"executor": "res://Player/HPUp1.tscn",
+	"remove": false,
+	"next": []
 }
 
 var DmgUp1 = {
-	"title": "Cannon Power 1",
+	"title": "Heavy Ammunition",
 	"text": "Increase the damage dealt by your cannon bullets.",
 	"icon": "res://assets/dmgup.png",
-	"executor": "res://Player/DMGUp.tscn"
+	"executor": "res://Player/DMGUp.tscn",
+	"remove": false,
+	"next": []
 }
 
 var FireRateUp1 = {
-	"title": "Cannon Reload 1",
+	"title": "Accelerated Reload",
 	"text": "Increases the fire rate of your cannon.",
 	"icon": "res://assets/firerateup.png",
-	"executor": "res://Player/FireRateUp.tscn"
+	"executor": "res://Player/FireRateUp.tscn",
+	"remove": false,
+	"next": []
 }
 
-var available_upgrades = [HPUpgrade1, SpeedUpgrade1, FireRateUp1, DmgUp1]
+var EvenMoreCannons = {
+	"title": "Even More Cannons",
+	"text": "Even more cannons!",
+	"icon": "res://assets/firerateup.png",
+	"executor": "res://Player/EvenMoreCannonsUpgrade.tscn",
+	"remove": true,
+	"next": []
+}
+
+var MoreCannons = {
+	"title": "More Cannons",
+	"text": "More cannons!",
+	"icon": "res://assets/firerateup.png",
+	"executor": "res://Player/MoreCannonsUpgrade.tscn",
+	"remove": true,
+	"next": [EvenMoreCannons]
+}
+
+
+var available_upgrades = [MoreCannons, HPUpgrade1, SpeedUpgrade1, FireRateUp1, DmgUp1]
 var upgrade_buttons = [
 	"HUD/UpgradeMenu/Inner/UpgradeButton1", 
 	"HUD/UpgradeMenu/Inner/UpgradeButton2", 
@@ -118,6 +145,7 @@ func start_game():
 	_player.connect("died", self, "_on_player_died")
 	_player.emit_signal("stats_changed", _player)
 	_player.connect("select_upgrade", self, "start_upgrade")
+	# start_upgrade()
 	
 	$SpawnTimer.wait_time = timer_base_time + randf() * timer_base_time
 	$SpawnTimer.start()
@@ -171,8 +199,10 @@ func start_upgrade():
 		button.icon = load(upgrade["icon"])
 		button.get_node("Title").text = upgrade["title"]
 		button.get_node("Description").text = upgrade["text"]
-		assigned_upgrades.append(upgrade["executor"])
+		assigned_upgrades.append(upgrade)
 		index = index + 1
+		if index >= 4:
+			break
 	print(assigned_upgrades)
 
 func _on_UpgradeButton1_pressed():
@@ -188,9 +218,17 @@ func _on_UpgradeButton4_pressed():
 	exec_upgrade(3)
 
 func exec_upgrade(index):
-	var executor_scene = assigned_upgrades[index]
+	var upgrade_deets = assigned_upgrades[index]
+	var executor_scene = upgrade_deets["executor"]
 	var executor_instance = load(executor_scene).instance()
 	executor_instance.apply_upgrade(_player)
+	
+	if upgrade_deets["remove"]:
+		available_upgrades.erase(upgrade_deets)
+		
+	for next_upgrade in upgrade_deets["next"]:
+		available_upgrades.append(next_upgrade)
+	
 	$HUD/UpgradeMenu.visible = false
 	get_tree().paused = false
 
