@@ -83,46 +83,110 @@ var _heavy_spawn_list = [Dreadnought, Dreadnought, DeathWheel]
 
 ### Upgrades
 
+var SpeedUpgrade3 = {
+	"title": "Engine Upgrade III",
+	"text": "Further Increase your ship's movement speed.",
+	"icon": "res://assets/speedup.png",
+	"executor": "res://Player/Upgrades/SpeedUp1.tscn",
+	"remove": true,
+	"next": []
+}
+var SpeedUpgrade2 = {
+	"title": "Engine Upgrade II",
+	"text": "Further Increase your ship's movement speed.",
+	"icon": "res://assets/speedup.png",
+	"executor": "res://Player/Upgrades/SpeedUp1.tscn",
+	"remove": true,
+	"next": [SpeedUpgrade3]
+}
 var SpeedUpgrade1 = {
-	"title": "Engine Upgrade",
+	"title": "Engine Upgrade I",
 	"text": "Increase your ship's movement speed.",
 	"icon": "res://assets/speedup.png",
-	"executor": "res://Player/SpeedUp1.tscn",
-	"remove": false,
+	"executor": "res://Player/Upgrades/SpeedUp1.tscn",
+	"remove": true,
+	"next": [SpeedUpgrade2]
+}
+var HPUpgrade3 = {
+	"title": "Hull Upgrade III",
+	"text": "Further increases your ship's HP. Also fully heals your HP.",
+	"icon": "res://assets/hpup.png",
+	"executor": "res://Player/Upgrades/HPUp1.tscn",
+	"remove": true,
 	"next": []
+}
+var HPUpgrade2 = {
+	"title": "Hull Upgrade II",
+	"text": "Further increases your ship's HP. Also fully heals your HP.",
+	"icon": "res://assets/hpup.png",
+	"executor": "res://Player/Upgrades/HPUp1.tscn",
+	"remove": true,
+	"next": [HPUpgrade3]
 }
 var HPUpgrade1 = {
-	"title": "Hull Upgrade",
-	"text": "Increase your ship's HP. Also fully heals your HP.",
+	"title": "Hull Upgrade I",
+	"text": "Increases your ship's HP. Also fully heals your HP.",
 	"icon": "res://assets/hpup.png",
-	"executor": "res://Player/HPUp1.tscn",
-	"remove": false,
-	"next": []
+	"executor": "res://Player/Upgrades/HPUp1.tscn",
+	"remove": true,
+	"next": [HPUpgrade2]
 }
 
-var DmgUp1 = {
-	"title": "Heavy Ammunition",
-	"text": "Increase the damage dealt by your cannon bullets.",
+var DmgUp3 = {
+	"title": "Heavy Ammunition III",
+	"text": "Further increases the damage dealt by your cannon bullets.",
 	"icon": "res://assets/dmgup.png",
-	"executor": "res://Player/DMGUp.tscn",
-	"remove": false,
+	"executor": "res://Player/Upgrades/DMGUp.tscn",
+	"remove": true,
 	"next": []
 }
+var DmgUp2 = {
+	"title": "Heavy Ammunition II",
+	"text": "Further increases the damage dealt by your cannon bullets.",
+	"icon": "res://assets/dmgup.png",
+	"executor": "res://Player/Upgrades/DMGUp.tscn",
+	"remove": true,
+	"next": [DmgUp3]
+}
+var DmgUp1 = {
+	"title": "Heavy Ammunition I",
+	"text": "Increases the damage dealt by your cannon bullets.",
+	"icon": "res://assets/dmgup.png",
+	"executor": "res://Player/Upgrades/DMGUp.tscn",
+	"remove": true,
+	"next": [DmgUp2]
+}
 
+var FireRateUp3 = {
+	"title": "Accelerated Reload III",
+	"text": "Further increases the fire rate of your cannon.",
+	"icon": "res://assets/firerateup.png",
+	"executor": "res://Player/Upgrades/FireRateUp.tscn",
+	"remove": true,
+	"next": []
+}
+var FireRateUp2 = {
+	"title": "Accelerated Reload II",
+	"text": "Further increases the fire rate of your cannon.",
+	"icon": "res://assets/firerateup.png",
+	"executor": "res://Player/Upgrades/FireRateUp.tscn",
+	"remove": true,
+	"next": [FireRateUp3]
+}
 var FireRateUp1 = {
 	"title": "Accelerated Reload",
 	"text": "Increases the fire rate of your cannon.",
 	"icon": "res://assets/firerateup.png",
-	"executor": "res://Player/FireRateUp.tscn",
-	"remove": false,
-	"next": []
+	"executor": "res://Player/Upgrades/FireRateUp.tscn",
+	"remove": true,
+	"next": [FireRateUp2]
 }
 
 var EvenMoreCannons = {
 	"title": "Even More Cannons",
 	"text": "Even more cannons!",
 	"icon": "res://assets/evenmorecannons.png",
-	"executor": "res://Player/EvenMoreCannonsUpgrade.tscn",
+	"executor": "res://Player/Upgrades/EvenMoreCannonsUpgrade.tscn",
 	"remove": true,
 	"next": []
 }
@@ -131,7 +195,7 @@ var MoreCannons = {
 	"title": "More Cannons",
 	"text": "More cannons!",
 	"icon": "res://assets/morecannons.png",
-	"executor": "res://Player/MoreCannonsUpgrade.tscn",
+	"executor": "res://Player/Upgrades/MoreCannonsUpgrade.tscn",
 	"remove": true,
 	"next": [EvenMoreCannons]
 }
@@ -140,12 +204,72 @@ var Harvester = {
 	"title": "Harvester",
 	"text": "Automatically pull pickups towards you for easy harvesting.",
 	"icon": "res://assets/morecannons.png",
-	"executor": "res://Player/HarvesterUpgrade.tscn",
+	"executor": "res://Player/Upgrades/HarvesterUpgrade.tscn",
 	"remove": true,
 	"next": []
 }
 
-var available_upgrades = [Harvester, MoreCannons, HPUpgrade1, SpeedUpgrade1, FireRateUp1, DmgUp1]
+var ArmorUp2 = {
+	"title": "Hull Plating II",
+	"text": "Further reduces incoming damage",
+	"icon": "res://assets/shieldup.png",
+	"executor": "res://Player/Upgrades/ArmorUp.tscn",
+	"remove": true,
+	"next": []
+}
+
+var ArmorUp1 = {
+	"title": "Hull Plating I",
+	"text": "Reduces incoming damage",
+	"icon": "res://assets/shieldup.png",
+	"executor": "res://Player/Upgrades/ArmorUp.tscn",
+	"remove": true,
+	"next": [ArmorUp2]
+}
+
+var RegenUp2 = {
+	"title": "Automatic Repair II",
+	"text": "Further recovers lost HP over time",
+	"icon": "res://assets/regenup.png",
+	"executor": "res://Player/Upgrades/RegenUp.tscn",
+	"remove": true,
+	"next": []
+}
+var RegenUp1 = {
+	"title": "Automatic Repair I",
+	"text": "Recovers lost HP over time",
+	"icon": "res://assets/regenup.png",
+	"executor": "res://Player/Upgrades/RegenUp.tscn",
+	"remove": true,
+	"next": [RegenUp2]
+}
+var HPRecovery = {
+	"title": "Emergency Repair",
+	"text": "Immediately recovers some lost HP",
+	"icon": "res://assets/health.png",
+	"executor": "res://Player/Upgrades/HPRecovery.tscn",
+	"remove": false,
+	"next": []
+}
+var EnergyRecovery = {
+	"title": "Emergency Charge",
+	"text": "Immediately recovers some energy",
+	"icon": "res://assets/energy.png",
+	"executor": "res://Player/Upgrades/EnergyRecovery.tscn",
+	"remove": false,
+	"next": []
+}
+
+var available_upgrades = [
+	RegenUp1, 
+	ArmorUp1, 
+	Harvester, 
+	MoreCannons, 
+	HPUpgrade1, 
+	SpeedUpgrade1, 
+	FireRateUp1, 
+	DmgUp1
+	]
 var upgrade_buttons = [
 	"HUD/UpgradeMenu/Inner/UpgradeButton1", 
 	"HUD/UpgradeMenu/Inner/UpgradeButton2", 
@@ -245,12 +369,16 @@ func exec_upgrade(index):
 	var executor_scene = upgrade_deets["executor"]
 	var executor_instance = load(executor_scene).instance()
 	executor_instance.apply_upgrade(_player)
+	_player.level = _player.level + 1
 	
 	if upgrade_deets["remove"]:
 		available_upgrades.erase(upgrade_deets)
 		
 	for next_upgrade in upgrade_deets["next"]:
 		available_upgrades.append(next_upgrade)
+	if available_upgrades.size() <= 1:
+		available_upgrades.append(HPRecovery)
+		available_upgrades.append(EnergyRecovery)
 	
 	$HUD/UpgradeMenu.visible = false
 	get_tree().paused = false
@@ -262,7 +390,14 @@ func _on_player_died():
 	
 
 func spawn(spawn_list, timer, multiplier):
+	var mult = multiplier
 	if is_instance_valid(_player):
+		# reduce spawn timers for higher level players
+		var level = _player.level*2 + 1
+		if level >= 50:
+			level = 50
+		mult = (100-level) * mult / 100
+		
 		var count_opts = spawn_list.size()
 		if count_opts == 0:
 			return
@@ -276,7 +411,8 @@ func spawn(spawn_list, timer, multiplier):
 		spawn_count = spawn_count + 1
 
 	# random wait until next drop
-	timer.wait_time = (multiplier * timer_base_time) + randf() * timer_base_time
+	print("mult=", mult)
+	timer.wait_time = (mult * timer_base_time) + randf() * timer_base_time
 
 func _on_MidSpawnTimer_timeout():
 	spawn(_mid_spawn_list, $MidSpawnTimer, mid_timer_mult)

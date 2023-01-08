@@ -10,7 +10,8 @@ extends Node2D
 func _ready():
 	pass # Replace with function body.
 
-
 func apply_upgrade(player):
-	player.speed = player.speed + 25
-	print("Speed ", player.speed)
+	player.energycurrent = player.energycurrent + 50
+	if player.energycurrent > player.energymax:
+		player.energycurrent = player.energymax
+	player.emit_signal("stats_changed")

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://assets/cannon.png" type="Texture" id=1]
-[ext_resource path="res://Player/PlayerCannon.gd" type="Script" id=2]
+[ext_resource path="res://Player/Components/PlayerCannon.gd" type="Script" id=2]
 [ext_resource path="res://sounds/laserShoot.wav" type="AudioStream" id=3]
 
 [node name="PlayerCannon" type="Node2D"]

@@ -13,7 +13,7 @@ export var speed = 250
 export var hpmax = 100
 var hpcurrent = hpmax
 export var energymax = 100
-var energycurrent = energymax
+var energycurrent = 50
 export var mineralsmax = 100
 var mineralscurrent = 0
 
@@ -25,9 +25,12 @@ var bullet_damage = 20
 var fire_rate = 0.3
 var can_fire = true
 var _player = self
+var level = 1
 
-var bomb_cost = 100
-var bomb_damage = 30
+export var bomb_cost = 100
+export var bomb_damage = 30
+export var armor = 0
+export var regen = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -73,6 +76,9 @@ func _on_Player_hit(damage):
 	$Sprite.material.set_shader_param("flash_modifier", 1.0)
 	$FlashTimer.start()
 	$HitSound.play()
+	damage = damage - armor
+	if damage < 1:
+		damage = 1
 	hpcurrent = hpcurrent - damage
 	emit_signal("stats_changed", self)
 	if hpcurrent < 0:
@@ -98,9 +104,6 @@ func _on_Player_pickup(pickup, amount):
 		
 
 
-func _on_EnergyDrainTimer_timeout():
-	pass
-		
 func die():
 	var explosion_instance = explosion.instance()
 	explosion_instance.position = get_global_position()
@@ -112,3 +115,9 @@ func die():
 func _on_FlashTimer_timeout():
 	$Sprite.material.set_shader_param("flash_modifier", 0.0)
 
+func _on_RegenTimer_timeout():
+	if regen > 0 and hpcurrent < hpmax:
+		hpcurrent = hpcurrent + regen
+		if hpcurrent > hpmax:
+			hpcurrent = hpmax
+		emit_signal("stats_changed")

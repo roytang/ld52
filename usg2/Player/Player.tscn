@@ -4,7 +4,7 @@
 [ext_resource path="res://assets/ship.png" type="Texture" id=2]
 [ext_resource path="res://hitflash.gdshader" type="Shader" id=3]
 [ext_resource path="res://assets/bomb.png" type="Texture" id=4]
-[ext_resource path="res://Player/PlayerCannon.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Player/Components/PlayerCannon.tscn" type="PackedScene" id=5]
 [ext_resource path="res://sounds/hitHurt.wav" type="AudioStream" id=6]
 [ext_resource path="res://sounds/wave.wav" type="AudioStream" id=7]
 [ext_resource path="res://sounds/error.wav" type="AudioStream" id=8]
@@ -71,7 +71,7 @@ shape = SubResource( 1 )
 position = Vector2( -16.6667, 1.66667 )
 shape = SubResource( 2 )
 
-[node name="EnergyDrainTimer" type="Timer" parent="."]
+[node name="RegenTimer" type="Timer" parent="."]
 autostart = true
 
 [node name="FlashTimer" type="Timer" parent="."]
@@ -96,5 +96,5 @@ stream = ExtResource( 8 )
 
 [connection signal="hit" from="." to="." method="_on_Player_hit"]
 [connection signal="pickup" from="." to="." method="_on_Player_pickup"]
-[connection signal="timeout" from="EnergyDrainTimer" to="." method="_on_EnergyDrainTimer_timeout"]
+[connection signal="timeout" from="RegenTimer" to="." method="_on_RegenTimer_timeout"]
 [connection signal="timeout" from="FlashTimer" to="." method="_on_FlashTimer_timeout"]

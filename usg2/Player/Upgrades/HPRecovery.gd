@@ -10,8 +10,9 @@ extends Node2D
 func _ready():
 	pass # Replace with function body.
 
+
 func apply_upgrade(player):
-	player.hpmax = player.hpmax + 10
-	player.hpcurrent = player.hpmax
-	print(player.hpcurrent, " / ", player.hpmax)
+	player.hpcurrent = player.hpcurrent + 50
+	if player.hpcurrent > player.hpmax:
+		player.hpcurrent = player.hpmax
 	player.emit_signal("stats_changed")
