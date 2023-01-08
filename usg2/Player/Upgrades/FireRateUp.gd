@@ -11,4 +11,4 @@ func _ready():
 	pass # Replace with function body.
 
 func apply_upgrade(player):
-	player.fire_rate = player.fire_rate - 0.05
+	player.fire_rate = player.fire_rate - 0.03

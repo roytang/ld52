@@ -12,5 +12,4 @@ func _ready():
 
 func apply_upgrade(player):
 	player.hpmax = player.hpmax + 15
-	player.hpcurrent = player.hpmax
-	player.emit_signal("stats_changed")
+	# player.hpcurrent = player.hpmax

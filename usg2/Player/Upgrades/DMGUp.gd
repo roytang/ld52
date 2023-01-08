@@ -11,4 +11,4 @@ func _ready():
 	pass # Replace with function body.
 
 func apply_upgrade(player):
-	player.bullet_damage = player.bullet_damage + 5
+	player.bullet_damage = player.bullet_damage + 4

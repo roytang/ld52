@@ -12,7 +12,7 @@ func _ready():
 
 
 func apply_upgrade(player):
-	player.hpcurrent = player.hpcurrent + 50
+	player.hpcurrent = player.hpcurrent + 25
 	if player.hpcurrent > player.hpmax:
 		player.hpcurrent = player.hpmax
 	player.emit_signal("stats_changed")

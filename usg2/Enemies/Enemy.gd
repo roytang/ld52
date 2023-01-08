@@ -24,7 +24,7 @@ var health_pickup = "res://Items/HealthPickup.tscn"
 var energy_pickup = "res://Items/EnergyPickup.tscn" 
 var minerals_pickup = "res://Items/MineralsPickup.tscn" 
 
-var drop_list = [minerals_pickup, minerals_pickup, minerals_pickup, energy_pickup, health_pickup]
+var drop_list = [minerals_pickup, minerals_pickup, minerals_pickup, health_pickup, energy_pickup, health_pickup]
 
 # hit flash stuff
 var sprite

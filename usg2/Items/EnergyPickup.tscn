@@ -27,6 +27,7 @@ tracks/0/keys = {
 [node name="EnergyPickup" type="Area2D" groups=["pickups"]]
 script = ExtResource( 2 )
 pickuptype = 1
+amount = 8
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )

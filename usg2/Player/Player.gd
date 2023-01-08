@@ -26,6 +26,8 @@ var fire_rate = 0.3
 var can_fire = true
 var _player = self
 var level = 1
+var can_be_hit = true
+var hit_recovery = 0.2
 
 export var bomb_cost = 100
 export var bomb_damage = 30
@@ -73,16 +75,21 @@ func _physics_process(delta):
 
 
 func _on_Player_hit(damage):
-	$Sprite.material.set_shader_param("flash_modifier", 1.0)
-	$FlashTimer.start()
-	$HitSound.play()
-	damage = damage - armor
-	if damage < 1:
-		damage = 1
-	hpcurrent = hpcurrent - damage
-	emit_signal("stats_changed", self)
-	if hpcurrent <= 0:
-		die()
+	if can_be_hit:
+		can_be_hit = false
+		$Sprite.material.set_shader_param("flash_modifier", 1.0)
+		$FlashTimer.start()
+		$HitSound.play()
+		damage = damage - armor
+		if damage < 1:
+			damage = 1
+		hpcurrent = hpcurrent - damage
+		emit_signal("stats_changed", self)
+		if hpcurrent <= 0:
+			die()
+		yield(get_tree().create_timer(hit_recovery), "timeout")
+		can_be_hit = true
+
 
 
 func _on_Player_pickup(pickup, amount):

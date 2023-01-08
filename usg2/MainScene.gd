@@ -8,7 +8,7 @@ var asteroid_scene = preload("res://Asteroid.tscn")
 var _player
 
 export var timer_base_time = 1.0
-export var mid_timer_mult = 15.0
+export var mid_timer_mult = 18.0
 export var heavy_timer_mult = 45.0
 var spawn_count = 0
 
@@ -83,6 +83,7 @@ var DeathWheel = {
 var _spawn_list = [Seeker, Seeker, Seeker, Spreader, Hunter]
 var _mid_spawn_list = [Corvette, Corvette, Cruiser, DreadWing]
 var _heavy_spawn_list = [Dreadnought, Dreadnought, DeathWheel]
+var _emergency_spawn_list = [Seeker, Seeker, Seeker, Dreadnought, Dreadnought, DeathWheel]
 
 ### Upgrades
 
@@ -112,7 +113,7 @@ var SpeedUpgrade1 = {
 }
 var HPUpgrade3 = {
 	"title": "Hull Upgrade III",
-	"text": "Further increases your ship's HP. Also fully heals your HP.",
+	"text": "Further increases your ship's HP.",
 	"icon": "res://assets/hpup.png",
 	"executor": "res://Player/Upgrades/HPUp1.tscn",
 	"remove": true,
@@ -120,7 +121,7 @@ var HPUpgrade3 = {
 }
 var HPUpgrade2 = {
 	"title": "Hull Upgrade II",
-	"text": "Further increases your ship's HP. Also fully heals your HP.",
+	"text": "Further increases your ship's HP.",
 	"icon": "res://assets/hpup.png",
 	"executor": "res://Player/Upgrades/HPUp1.tscn",
 	"remove": true,
@@ -252,6 +253,7 @@ var HPRecovery = {
 	"icon": "res://assets/health.png",
 	"executor": "res://Player/Upgrades/HPRecovery.tscn",
 	"remove": false,
+	"emergency_spawn": true,
 	"next": []
 }
 var EnergyRecovery = {
@@ -260,6 +262,7 @@ var EnergyRecovery = {
 	"icon": "res://assets/energy.png",
 	"executor": "res://Player/Upgrades/EnergyRecovery.tscn",
 	"remove": false,
+	"emergency_spawn": true,
 	"next": []
 }
 
@@ -302,7 +305,6 @@ func start_game():
 	$MidSpawnTimer.start()
 	$HeavySpawnTimer.wait_time = (heavy_timer_mult * timer_base_time) + randf() * timer_base_time
 	$HeavySpawnTimer.start()
-	
 
 
 func _on_AsteroidSpawner_timeout():
@@ -379,9 +381,21 @@ func exec_upgrade(index):
 		
 	for next_upgrade in upgrade_deets["next"]:
 		available_upgrades.append(next_upgrade)
-	if available_upgrades.size() <= 1:
+	if available_upgrades.size() < 1:
 		available_upgrades.append(HPRecovery)
 		available_upgrades.append(EnergyRecovery)
+		
+	# always restore a bit of HP after an upgrade
+	_player.hpcurrent = _player.hpcurrent + 25
+	if _player.hpcurrent  > _player.hpmax:
+		_player.hpcurrent = _player.hpmax
+	_player.emit_signal("stats_changed", _player)
+	
+	# oops, some upgrades can trigger emergency spawns
+	if upgrade_deets.has("emergency_spawn"):
+		spawn(_emergency_spawn_list, $SpawnTimer, 1.0)
+		spawn(_emergency_spawn_list, $SpawnTimer, 1.0)
+		spawn(_emergency_spawn_list, $SpawnTimer, 1.0)
 	
 	$HUD/UpgradeMenu.visible = false
 	get_tree().paused = false
@@ -397,9 +411,9 @@ func spawn(spawn_list, timer, multiplier):
 	var mult = multiplier
 	if is_instance_valid(_player):
 		# reduce spawn timers for higher level players
-		var level = _player.level*2 + 1
-		if level >= 50:
-			level = 50
+		var level = _player.level*4 + 1
+		if level >= 80:
+			level = 80
 		mult = (100-level) * mult / 100
 		
 		var count_opts = spawn_list.size()
@@ -409,7 +423,6 @@ func spawn(spawn_list, timer, multiplier):
 		var spawn_scene = load(new_spawn_data["scene"])
 		var spawn_instance = spawn_scene.instance()
 		count_opts = spawn_points.size()
-		print("SPAWN PLAYER ", _player)
 		spawn_instance._player = _player
 		spawn_instance.position = spawn_points[randi() % count_opts]
 		spawn_instance.add_to_group("enemy")
@@ -417,7 +430,7 @@ func spawn(spawn_list, timer, multiplier):
 		spawn_count = spawn_count + 1
 
 	# random wait until next drop
-	print("mult=", mult)
+	# print("mult=", mult)
 	timer.wait_time = (mult * timer_base_time) + randf() * timer_base_time
 
 func _on_MidSpawnTimer_timeout():
