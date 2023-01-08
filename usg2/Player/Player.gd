@@ -13,7 +13,7 @@ export var speed = 250
 export var hpmax = 100
 var hpcurrent = hpmax
 export var energymax = 100
-var energycurrent = 50
+var energycurrent = 100
 export var mineralsmax = 100
 var mineralscurrent = 0
 
@@ -81,7 +81,7 @@ func _on_Player_hit(damage):
 		damage = 1
 	hpcurrent = hpcurrent - damage
 	emit_signal("stats_changed", self)
-	if hpcurrent < 0:
+	if hpcurrent <= 0:
 		die()
 
 
