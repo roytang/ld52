@@ -17,28 +17,25 @@ var energycurrent = energymax
 export var mineralsmax = 100
 var mineralscurrent = 0
 
+var explosion = preload("res://Items/Explosion.tscn")
+
 var bullet = preload("res://Items/PlayerBullet.tscn")
 var bullet_speed = 800
 var bullet_damage = 20
 var fire_rate = 0.3
 var can_fire = true
+var _player = self
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass
+	var cannon = $PlayerCannon
+	connect("fire_cannons", cannon, "fire")
 
 func _process(delta):
 	look_at(get_global_mouse_position())
 
 	if Input.is_action_pressed("fire") and can_fire:
-		var bullet_instance = bullet.instance()
-		bullet_instance.damage = bullet_damage
-		bullet_instance.position = $BulletPoint.get_global_position()
-		bullet_instance.rotation_degrees = rotation_degrees
-		bullet_instance.apply_impulse(Vector2(), Vector2(bullet_speed, 0).rotated(rotation))
-		get_tree().get_root().add_child(bullet_instance)
 		emit_signal("fire_cannons")
-		# $LaserSound.play()
 		can_fire = false
 		yield(get_tree().create_timer(fire_rate), "timeout")
 		can_fire = true
@@ -61,6 +58,7 @@ func _physics_process(delta):
 func _on_Player_hit(damage):
 	$Sprite.material.set_shader_param("flash_modifier", 1.0)
 	$FlashTimer.start()
+	$HitSound.play()
 	hpcurrent = hpcurrent - damage
 	emit_signal("stats_changed", self)
 	if hpcurrent < 0:
@@ -93,10 +91,13 @@ func _on_EnergyDrainTimer_timeout():
 		die()
 		
 func die():
-	print("YOU DIED!")
+	var explosion_instance = explosion.instance()
+	explosion_instance.position = get_global_position()
+	get_tree().get_root().add_child(explosion_instance)
 	emit_signal("died")
 
 
 
 func _on_FlashTimer_timeout():
 	$Sprite.material.set_shader_param("flash_modifier", 0.0)
+

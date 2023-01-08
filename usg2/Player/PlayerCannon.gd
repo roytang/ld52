@@ -17,4 +17,5 @@ func fire():
 	angle = angle.angle()
 	bullet_instance.apply_impulse(Vector2(), Vector2(player.bullet_speed, 0).rotated(angle))
 	get_tree().get_root().add_child(bullet_instance)
+	$FireSound.play()
 

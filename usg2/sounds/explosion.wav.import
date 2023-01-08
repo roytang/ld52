@@ -2,12 +2,12 @@
 
 importer="wav"
 type="AudioStreamSample"
-path="res://.import/bgm.wav-986847edff92f29ec805368a841d2666.sample"
+path="res://.import/explosion.wav-3b6b3677a752f01353ef5846b5b927e3.sample"
 
 [deps]
 
-source_file="res://assets/bgm.wav"
-dest_files=[ "res://.import/bgm.wav-986847edff92f29ec805368a841d2666.sample" ]
+source_file="res://sounds/explosion.wav"
+dest_files=[ "res://.import/explosion.wav-3b6b3677a752f01353ef5846b5b927e3.sample" ]
 
 [params]
 
@@ -17,7 +17,7 @@ force/max_rate=false
 force/max_rate_hz=44100
 edit/trim=false
 edit/normalize=false
-edit/loop_mode=2
+edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
 compress/mode=0

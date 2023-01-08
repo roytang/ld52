@@ -31,6 +31,10 @@ var sprite
 var flash_timer
 const SHADER = preload("res://hitflash.gdshader")
 
+var explosion = preload("res://Items/Explosion.tscn")
+
+var hit_sound
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	randomize()
@@ -55,7 +59,9 @@ func _ready():
 		# mat.set_shader(SHADER)
 		sprite.set_material(mat)
 		
-	var collision_shape = $CollisionShape2D
+	hit_sound = AudioStreamPlayer.new()
+	hit_sound.stream = load("res://sounds/hitHurt.wav")
+	add_child(hit_sound)
 
 func _process(delta):
 	if is_instance_valid(_player) and rotating:
@@ -67,6 +73,7 @@ func _on_Enemy_hit(damage):
 		flash_timer.start()
 	
 	print("Hit for damage ", damage)
+	hit_sound.play()
 	if can_be_hit:
 		hpcurrent = hpcurrent - damage
 		print("Remaining HP ", hpcurrent)
@@ -95,6 +102,10 @@ func die():
 		pickup.position = get_global_position() + offset
 		get_tree().get_root().call_deferred("add_child", pickup)
 	
+	var explosion_instance = explosion.instance()
+	explosion_instance.position = get_global_position()
+	get_tree().get_root().add_child(explosion_instance)
+
 	# make sumbong to the parent
 	get_parent().emit_signal("child_destroyed")
 	queue_free()

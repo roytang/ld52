@@ -29,6 +29,7 @@ func _on_Timer_timeout():
 			angle = angle.angle()
 			bullet_instance.apply_impulse(Vector2(), Vector2(bullet_speed, 0).rotated(angle))
 		get_tree().get_root().add_child(bullet_instance)
+		$FireSound.play()
 	else:
 		_player = get_parent()._player
 		
