@@ -5,6 +5,7 @@ var asteroid_scene = preload("res://Asteroid.tscn")
 var _player
 
 export var timer_base_time = 1.0
+export var mid_timer_mult = 12.0
 var spawn_count = 0
 
 var spawn_points = [
@@ -45,7 +46,26 @@ var Hunter = {
 			"id": 3
 		}
 
-var spawn_list = [Seeker, Seeker, Seeker, Spreader, Hunter]
+var Corvette = {
+			"name": "Corvette",
+			"scene": "res://Enemies/Corvette.tscn",
+			"id": 4
+		}
+
+var Cruiser = {
+			"name": "Cruiser",
+			"scene": "res://Enemies/Cruiser.tscn",
+			"id": 5
+		}
+
+var DreadWing = {
+			"name": "DreadWing",
+			"scene": "res://Enemies/DreadWing.tscn",
+			"id": 6
+		}
+
+var _spawn_list = [Seeker, Seeker, Seeker, Spreader, Hunter]
+var _mid_spawn_list = [Corvette, Corvette, Cruiser, DreadWing]
 
 ### Upgrades
 
@@ -101,6 +121,9 @@ func start_game():
 	
 	$SpawnTimer.wait_time = timer_base_time + randf() * timer_base_time
 	$SpawnTimer.start()
+	$MidSpawnTimer.wait_time = (mid_timer_mult * timer_base_time) + randf() * timer_base_time
+	print($MidSpawnTimer.wait_time)
+	$MidSpawnTimer.start()
 	
 
 
@@ -129,18 +152,7 @@ func _on_AsteroidSpawner_timeout():
 
 
 func _on_SpawnTimer_timeout():
-	if is_instance_valid(_player):
-		var count_opts = spawn_list.size()
-		var new_spawn_data = spawn_list[randi() % count_opts]
-		var spawn_scene = load(new_spawn_data["scene"])
-		var spawn_instance = spawn_scene.instance()
-		count_opts = spawn_points.size()
-		spawn_instance.position = spawn_points[randi() % count_opts]
-		get_tree().get_root().call_deferred("add_child", spawn_instance)
-		spawn_count = spawn_count + 1
-
-	# random wait until next drop
-	$SpawnTimer.wait_time = timer_base_time + randf() * timer_base_time
+	spawn(_spawn_list, $SpawnTimer, 1.0)
 
 func start_upgrade():
 	get_tree().paused = true
@@ -187,3 +199,20 @@ func _on_player_died():
 	$HUD/MessageBox/Label.text = "\n\n\nYOU DIED!!!\n\n\n(There is no restart yet, so just reload or whatever.)"
 	$HUD/MessageBox.visible = true
 	
+
+func spawn(spawn_list, timer, multiplier):
+	if is_instance_valid(_player):
+		var count_opts = spawn_list.size()
+		var new_spawn_data = spawn_list[randi() % count_opts]
+		var spawn_scene = load(new_spawn_data["scene"])
+		var spawn_instance = spawn_scene.instance()
+		count_opts = spawn_points.size()
+		spawn_instance.position = spawn_points[randi() % count_opts]
+		get_tree().get_root().call_deferred("add_child", spawn_instance)
+		spawn_count = spawn_count + 1
+
+	# random wait until next drop
+	timer.wait_time = (multiplier * timer_base_time) + randf() * timer_base_time
+
+func _on_MidSpawnTimer_timeout():
+	spawn(_mid_spawn_list, $MidSpawnTimer, mid_timer_mult)

@@ -1,0 +1,60 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://assets/core.png" type="Texture" id=1]
+[ext_resource path="res://Enemies/CoreController.gd" type="Script" id=2]
+[ext_resource path="res://Enemies/Enemy.gd" type="Script" id=3]
+[ext_resource path="res://assets/core3.png" type="Texture" id=4]
+[ext_resource path="res://assets/core2.png" type="Texture" id=5]
+[ext_resource path="res://assets/core1.png" type="Texture" id=6]
+
+[sub_resource type="SpriteFrames" id=3]
+animations = [ {
+"frames": [ ExtResource( 6 ), ExtResource( 5 ), ExtResource( 4 ), ExtResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 15.0
+
+[sub_resource type="Animation" id=2]
+resource_name = "rotate"
+length = 5.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0.0, 359.0 ]
+}
+
+[node name="Core" type="KinematicBody2D" groups=["enemy"]]
+collision_layer = 4
+collision_mask = 0
+script = ExtResource( 3 )
+hpmax = 200
+drop_count = 5
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+rotation = 1.49316
+scale = Vector2( 1, 1 )
+frames = SubResource( 3 )
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource( 1 )
+
+[node name="MovementController" type="Node2D" parent="."]
+script = ExtResource( 2 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "rotate"
+anims/rotate = SubResource( 2 )

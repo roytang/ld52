@@ -3,7 +3,7 @@
 [ext_resource path="res://assets/hunter.png" type="Texture" id=1]
 [ext_resource path="res://Enemies/HunterMovement.gd" type="Script" id=2]
 [ext_resource path="res://Enemies/Enemy.gd" type="Script" id=3]
-[ext_resource path="res://Items/Cannon.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Enemies/Cannon.tscn" type="PackedScene" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 15.0
@@ -13,6 +13,7 @@ collision_layer = 4
 collision_mask = 0
 script = ExtResource( 3 )
 hpmax = 30
+rotating = true
 
 [node name="Sprite" type="Sprite" parent="."]
 rotation = 1.5708
@@ -26,5 +27,5 @@ shape = SubResource( 1 )
 script = ExtResource( 2 )
 
 [node name="Cannon" parent="." instance=ExtResource( 4 )]
-position = Vector2( 0, 0 )
+position = Vector2( 17, 0 )
 bullet_speed = 350
