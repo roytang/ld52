@@ -29,3 +29,4 @@ script = ExtResource( 2 )
 [node name="Cannon" parent="." instance=ExtResource( 4 )]
 position = Vector2( 17, 0 )
 bullet_speed = 350
+random_scatter = true
