@@ -1,10 +1,6 @@
-Untitled Shooty Game2: The Harvesting
+Untitled Shooty Game 2: The Harvesting
 
 This is my submission for LUDUM DARE 52 with the theme "Harvest".
-
-I am not an artist, so please excuse the programmer art. And the weird mishmash of notes that is the BG music.
-
-I might upload Windows/Mac binaries later, but for now I'm submitting only the web version.
 
 Stack:
 
@@ -18,7 +14,7 @@ Stack:
 
     Font: Xolonium-Regular from the Godot Dodge tutorial
 
-https://hungryroy.itch.io/untitled-shooty-game-2
+Web playable version: https://hungryroy.itch.io/untitled-shooty-game-2
 
 Source code: https://github.com/roytang/ld52
 
